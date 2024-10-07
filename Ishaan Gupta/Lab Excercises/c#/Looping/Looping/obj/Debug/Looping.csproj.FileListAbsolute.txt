@@ -1,0 +1,7 @@
+C:\Users\Ishita\source\repos\Looping\Looping\bin\Debug\Looping.exe.config
+C:\Users\Ishita\source\repos\Looping\Looping\bin\Debug\Looping.exe
+C:\Users\Ishita\source\repos\Looping\Looping\bin\Debug\Looping.pdb
+C:\Users\Ishita\source\repos\Looping\Looping\obj\Debug\Looping.csproj.AssemblyReference.cache
+C:\Users\Ishita\source\repos\Looping\Looping\obj\Debug\Looping.csproj.CoreCompileInputs.cache
+C:\Users\Ishita\source\repos\Looping\Looping\obj\Debug\Looping.exe
+C:\Users\Ishita\source\repos\Looping\Looping\obj\Debug\Looping.pdb

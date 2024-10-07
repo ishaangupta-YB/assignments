@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ishita\\source\\repos\\FindString\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FC3089D5-7588-4200-AC99-B80E157441A4}|FindString\\FindString.csproj|c:\\users\\ishita\\source\\repos\\findstring\\findstring\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC3089D5-7588-4200-AC99-B80E157441A4}|FindString\\FindString.csproj|solutionrelative:findstring\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 270,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Ishita\\source\\repos\\FindString\\FindString\\Program.cs",
+              "RelativeDocumentMoniker": "FindString\\Program.cs",
+              "ToolTip": "C:\\Users\\Ishita\\source\\repos\\FindString\\FindString\\Program.cs",
+              "RelativeToolTip": "FindString\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T09:06:44.057Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+C:\Users\Ishita\source\repos\Array\Array\bin\Debug\Array.exe.config
+C:\Users\Ishita\source\repos\Array\Array\bin\Debug\Array.exe
+C:\Users\Ishita\source\repos\Array\Array\bin\Debug\Array.pdb
+C:\Users\Ishita\source\repos\Array\Array\obj\Debug\Array.csproj.AssemblyReference.cache
+C:\Users\Ishita\source\repos\Array\Array\obj\Debug\Array.csproj.CoreCompileInputs.cache
+C:\Users\Ishita\source\repos\Array\Array\obj\Debug\Array.exe
+C:\Users\Ishita\source\repos\Array\Array\obj\Debug\Array.pdb

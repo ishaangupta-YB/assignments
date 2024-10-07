@@ -1,0 +1,7 @@
+C:\Users\Ishita\source\repos\CubeSquare\CubeSquare\bin\Debug\CubeSquare.exe.config
+C:\Users\Ishita\source\repos\CubeSquare\CubeSquare\bin\Debug\CubeSquare.exe
+C:\Users\Ishita\source\repos\CubeSquare\CubeSquare\bin\Debug\CubeSquare.pdb
+C:\Users\Ishita\source\repos\CubeSquare\CubeSquare\obj\Debug\CubeSquare.csproj.AssemblyReference.cache
+C:\Users\Ishita\source\repos\CubeSquare\CubeSquare\obj\Debug\CubeSquare.csproj.CoreCompileInputs.cache
+C:\Users\Ishita\source\repos\CubeSquare\CubeSquare\obj\Debug\CubeSquare.exe
+C:\Users\Ishita\source\repos\CubeSquare\CubeSquare\obj\Debug\CubeSquare.pdb

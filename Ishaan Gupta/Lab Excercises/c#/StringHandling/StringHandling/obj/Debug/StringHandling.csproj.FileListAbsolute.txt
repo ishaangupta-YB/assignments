@@ -1,0 +1,7 @@
+C:\Users\Ishita\source\repos\StringHandling\StringHandling\bin\Debug\StringHandling.exe.config
+C:\Users\Ishita\source\repos\StringHandling\StringHandling\bin\Debug\StringHandling.exe
+C:\Users\Ishita\source\repos\StringHandling\StringHandling\bin\Debug\StringHandling.pdb
+C:\Users\Ishita\source\repos\StringHandling\StringHandling\obj\Debug\StringHandling.csproj.AssemblyReference.cache
+C:\Users\Ishita\source\repos\StringHandling\StringHandling\obj\Debug\StringHandling.csproj.CoreCompileInputs.cache
+C:\Users\Ishita\source\repos\StringHandling\StringHandling\obj\Debug\StringHandling.exe
+C:\Users\Ishita\source\repos\StringHandling\StringHandling\obj\Debug\StringHandling.pdb

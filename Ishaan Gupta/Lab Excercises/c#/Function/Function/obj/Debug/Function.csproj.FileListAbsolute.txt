@@ -1,0 +1,7 @@
+C:\Users\Ishita\source\repos\Function\Function\bin\Debug\Function.exe.config
+C:\Users\Ishita\source\repos\Function\Function\bin\Debug\Function.exe
+C:\Users\Ishita\source\repos\Function\Function\bin\Debug\Function.pdb
+C:\Users\Ishita\source\repos\Function\Function\obj\Debug\Function.csproj.AssemblyReference.cache
+C:\Users\Ishita\source\repos\Function\Function\obj\Debug\Function.csproj.CoreCompileInputs.cache
+C:\Users\Ishita\source\repos\Function\Function\obj\Debug\Function.exe
+C:\Users\Ishita\source\repos\Function\Function\obj\Debug\Function.pdb

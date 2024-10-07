@@ -1,0 +1,7 @@
+C:\Users\Ishita\source\repos\DateTimeManipulation\DateTimeManipulation\bin\Debug\DateTimeManipulation.exe.config
+C:\Users\Ishita\source\repos\DateTimeManipulation\DateTimeManipulation\bin\Debug\DateTimeManipulation.exe
+C:\Users\Ishita\source\repos\DateTimeManipulation\DateTimeManipulation\bin\Debug\DateTimeManipulation.pdb
+C:\Users\Ishita\source\repos\DateTimeManipulation\DateTimeManipulation\obj\Debug\DateTimeManipulation.csproj.AssemblyReference.cache
+C:\Users\Ishita\source\repos\DateTimeManipulation\DateTimeManipulation\obj\Debug\DateTimeManipulation.csproj.CoreCompileInputs.cache
+C:\Users\Ishita\source\repos\DateTimeManipulation\DateTimeManipulation\obj\Debug\DateTimeManipulation.exe
+C:\Users\Ishita\source\repos\DateTimeManipulation\DateTimeManipulation\obj\Debug\DateTimeManipulation.pdb

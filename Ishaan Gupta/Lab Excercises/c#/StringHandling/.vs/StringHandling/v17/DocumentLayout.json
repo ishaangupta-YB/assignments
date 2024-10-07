@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ishita\\source\\repos\\StringHandling\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C6539482-5632-4506-9F63-E9571A8F7DC8}|StringHandling\\StringHandling.csproj|c:\\users\\ishita\\source\\repos\\stringhandling\\stringhandling\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C6539482-5632-4506-9F63-E9571A8F7DC8}|StringHandling\\StringHandling.csproj|solutionrelative:stringhandling\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 270,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Ishita\\source\\repos\\StringHandling\\StringHandling\\Program.cs",
+              "RelativeDocumentMoniker": "StringHandling\\Program.cs",
+              "ToolTip": "C:\\Users\\Ishita\\source\\repos\\StringHandling\\StringHandling\\Program.cs",
+              "RelativeToolTip": "StringHandling\\Program.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAswAgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T09:01:18.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

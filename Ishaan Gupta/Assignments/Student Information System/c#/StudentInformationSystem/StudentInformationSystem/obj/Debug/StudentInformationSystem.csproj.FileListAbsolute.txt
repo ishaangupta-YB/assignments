@@ -1,0 +1,7 @@
+C:\Users\Ishita\source\repos\StudentInformationSystem\StudentInformationSystem\obj\Debug\StudentInformationSystem.csproj.AssemblyReference.cache
+C:\Users\Ishita\source\repos\StudentInformationSystem\StudentInformationSystem\obj\Debug\StudentInformationSystem.csproj.CoreCompileInputs.cache
+C:\Users\Ishita\source\repos\StudentInformationSystem\StudentInformationSystem\bin\Debug\StudentInformationSystem.exe.config
+C:\Users\Ishita\source\repos\StudentInformationSystem\StudentInformationSystem\bin\Debug\StudentInformationSystem.exe
+C:\Users\Ishita\source\repos\StudentInformationSystem\StudentInformationSystem\bin\Debug\StudentInformationSystem.pdb
+C:\Users\Ishita\source\repos\StudentInformationSystem\StudentInformationSystem\obj\Debug\StudentInformationSystem.exe
+C:\Users\Ishita\source\repos\StudentInformationSystem\StudentInformationSystem\obj\Debug\StudentInformationSystem.pdb
