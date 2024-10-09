@@ -9,9 +9,7 @@ namespace StudentInformationSystem.dao.interfaces
 {
     public interface IEnrollmentService
     {
-        IEnumerable<Enrollment> GetEnrollmentsByCourse(int courseId);
-        IEnumerable<Enrollment> GetEnrollmentsByStudent(int studentId);
-        void AddEnrollment(Enrollment enrollment);
-        void DeleteEnrollment(int enrollmentId);
+        Course GetCourse(int enrollmentId);
+        Student GetStudent(int enrollmentId);
     }
 }

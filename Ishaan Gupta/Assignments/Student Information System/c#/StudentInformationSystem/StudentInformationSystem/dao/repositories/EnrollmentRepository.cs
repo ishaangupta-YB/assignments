@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,40 +12,117 @@ namespace StudentInformationSystem.dao.repositories
 {
     public class EnrollmentRepository:IEnrollmentRepository
     {
-        private readonly InMemDB db = InMemDB.Instance;
-
+        private readonly QueryBuilder queryBuilder;
+        public EnrollmentRepository()
+        {
+            queryBuilder = new QueryBuilder();
+        }
         public void Add(Enrollment enrollment)
         {
-            db.Enrollments.Add(enrollment);
+            using (var connection = DBConn.GetConnection())
+            {
+                var columnValues = new Dictionary<string, object>
+                {
+                    {"StudentID", enrollment.StudentID },
+                    {"CourseID", enrollment.CourseID },
+                    {"EnrollmentDate", enrollment.EnrollmentDate }
+                };
+
+                var query = queryBuilder.Insert("Enrollments", columnValues).Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    foreach (var column in columnValues)
+                    {
+                        command.Parameters.AddWithValue($"@{column.Key}", column.Value);
+                    }
+                    command.ExecuteNonQuery();   
+                }
+            }
         }
 
         public void Delete(int enrollmentId)
         {
-            var enrollment = GetById(enrollmentId);
-            if (enrollment != null)
+            using (var connection = DBConn.GetConnection())
             {
-                db.Enrollments.Remove(enrollment);
+                var query = queryBuilder.Delete("Enrollments").Where("EnrollmentID = @EnrollmentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@EnrollmentID", enrollmentId);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
         public IEnumerable<Enrollment> GetAll()
         {
-            return db.Enrollments;
+            var enrollments = new List<Enrollment>();
+            using (var connection = DBConn.GetConnection())
+            {
+                var query = queryBuilder.Select("Enrollments").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var enrollment = new Enrollment
+                        {
+                            EnrollmentID = (int)reader["EnrollmentID"],
+                            StudentID = (int)reader["StudentID"],
+                            CourseID = (int)reader["CourseID"],
+                            EnrollmentDate = (DateTime)reader["EnrollmentDate"]
+                        };
+                        enrollments.Add(enrollment);
+                    }
+                }
+            }
+            return enrollments;
         }
 
         public Enrollment GetById(int enrollmentId)
         {
-            return db.Enrollments.FirstOrDefault(e => e.EnrollmentID == enrollmentId);
+            using (var connection = DBConn.GetConnection())
+            {
+                var query = queryBuilder.Select("Enrollments").Where("EnrollmentID = @EnrollmentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@EnrollmentID", enrollmentId);
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return new Enrollment
+                        {
+                            EnrollmentID = (int)reader["EnrollmentID"],
+                            StudentID = (int)reader["StudentID"],
+                            CourseID = (int)reader["CourseID"],
+                            EnrollmentDate = (DateTime)reader["EnrollmentDate"]
+                        };
+                    }
+                }
+            }
+            return null;
         }
 
         public void Update(Enrollment enrollment)
         {
-            var existingEnrollment = GetById(enrollment.EnrollmentID);
-            if (existingEnrollment != null)
+            using (var connection = DBConn.GetConnection())
             {
-                existingEnrollment.StudentID = enrollment.StudentID;
-                existingEnrollment.CourseID = enrollment.CourseID;
-                existingEnrollment.EnrollmentDate = enrollment.EnrollmentDate;
+                var columnValues = new Dictionary<string, object>
+                {
+                    {"StudentID", enrollment.StudentID },
+                    {"CourseID", enrollment.CourseID },
+                    {"EnrollmentDate", enrollment.EnrollmentDate }
+                };
+
+                var query = queryBuilder.Update("Enrollments", columnValues).Where("EnrollmentID = @EnrollmentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    foreach (var column in columnValues)
+                    {
+                        command.Parameters.AddWithValue($"@{column.Key}", column.Value);
+                    }
+                    command.Parameters.AddWithValue("@EnrollmentID", enrollment.EnrollmentID);
+                    command.ExecuteNonQuery();
+                }
             }
         }
     }

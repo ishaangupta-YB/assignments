@@ -11,11 +11,9 @@ namespace StudentInformationSystem.dao.interfaces
     {
         void EnrollInCourse(int studentId, int courseId);
         void UpdateStudentInfo(int studentId, string firstName, string lastName, DateTime dateOfBirth, string email, string phoneNumber);
-        void MakePayment(int studentId, decimal amount, DateTime paymentDate);
+        void MakePayment(int studentId, decimal amount, DateTime? paymentDate);
         IEnumerable<Course> GetEnrolledCourses(int studentId);
         IEnumerable<Payment> GetPaymentHistory(int studentId);
-        void AddStudent(Student student);
-        Student GetStudentById(int StudentID);
-
+        void DisplayStudentInfo(int studentId);
     }
 }

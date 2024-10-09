@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,34 @@ namespace StudentInformationSystem.dao.repositories
 {
     public class StudentRepository:IStudentRepository
     {
-        private readonly InMemDB db = InMemDB.Instance;
-        public void Add(Student student)
+        private readonly QueryBuilder queryBuilder;
+        public StudentRepository()
         {
-            db.Students.Add(student);
+            queryBuilder = new QueryBuilder();
+        }
+        public void Add(Student student)
+        { 
+            using (var connection = DBConn.GetConnection())
+            {
+                var columnValues = new Dictionary<string, object>
+                {
+                    {"FirstName", student.FirstName },
+                    {"LastName", student.LastName },
+                    {"DateOfBirth", student.DateOfBirth },
+                    {"Email", student.Email },
+                    {"PhoneNumber", student.PhoneNumber }
+                };
+
+                var query = queryBuilder.Insert("Students", columnValues).Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    foreach (var column in columnValues)
+                    {
+                        command.Parameters.AddWithValue($"@{column.Key}", column.Value);
+                    }
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Delete(int studentId)
@@ -22,28 +47,92 @@ namespace StudentInformationSystem.dao.repositories
             var student = GetById(studentId);
             if (student != null)
             {
-                db.Students.Remove(student);
+                using (var connection = DBConn.GetConnection())
+                {
+                    var query = queryBuilder.Delete("Students").Where("StudentID = @StudentID").Build();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@StudentID", studentId);
+                        command.ExecuteNonQuery();
+                    }
+                }
             }
         }
 
         public IEnumerable<Student> GetAll()
         {
-            return db.Students;
+            var students = new List<Student>();
+            using (var connection = DBConn.GetConnection())
+            {
+                var query = queryBuilder.Select("Students").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var student = new Student
+                        {
+                            StudentID = (int)reader["StudentID"],
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            DateOfBirth = (DateTime)reader["DateOfBirth"],
+                            Email = reader["Email"].ToString(),
+                            PhoneNumber = reader["PhoneNumber"].ToString()
+                        };
+                        students.Add(student);
+                    }
+                }
+            }
+            return students;
         }
         public Student GetById(int studentId)
         {
-            return db.Students.FirstOrDefault(s => s.StudentID == studentId);
+            using (var connection = DBConn.GetConnection())
+            {
+                var query = queryBuilder.Select("Students").Where("StudentID = @StudentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@StudentID", studentId);
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return new Student
+                        {
+                            StudentID = (int)reader["StudentID"],
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            DateOfBirth = (DateTime)reader["DateOfBirth"],
+                            Email = reader["Email"].ToString(),
+                            PhoneNumber = reader["PhoneNumber"].ToString()
+                        };
+                    }
+                }
+            }
+            return null;
         }
         public void Update(Student student)
         {
-            var existingStudent = GetById(student.StudentID);
-            if (existingStudent != null)
-            { 
-                existingStudent.FirstName = student.FirstName;
-                existingStudent.LastName = student.LastName;
-                existingStudent.DateOfBirth = student.DateOfBirth;
-                existingStudent.Email = student.Email;
-                existingStudent.PhoneNumber = student.PhoneNumber;
+            using (var connection = DBConn.GetConnection())
+            {
+                var columnValues = new Dictionary<string, object>
+                {
+                    {"FirstName", student.FirstName },
+                    {"LastName", student.LastName },
+                    {"DateOfBirth", student.DateOfBirth },
+                    {"Email", student.Email },
+                    {"PhoneNumber", student.PhoneNumber }
+                };
+
+                var query = queryBuilder.Update("Students", columnValues).Where("StudentID = @StudentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    foreach (var column in columnValues)
+                    {
+                        command.Parameters.AddWithValue($"@{column.Key}", column.Value);
+                    }
+                    command.Parameters.AddWithValue("@StudentID", student.StudentID);
+                    command.ExecuteNonQuery();
+                }
             }
         }
     }

@@ -37,7 +37,6 @@ namespace StudentInformationSystem.dao.services
 
             var enrollment = new Enrollment
             {
-                EnrollmentID = IDGenerator.GetNextEnrollmentID(),
                 StudentID = studentId,
                 CourseID = courseId,
                 EnrollmentDate = DateTime.Now
@@ -50,32 +49,32 @@ namespace StudentInformationSystem.dao.services
             if (student == null)  throw new StudentNotFoundException("Student not found.");
 
             if (string.IsNullOrWhiteSpace(email))  throw new InvalidStudentDataException("Email cannot be empty.");
-
             student.FirstName = firstName;
             student.LastName = lastName;
             student.DateOfBirth = dateOfBirth;
             student.Email = email;
             student.PhoneNumber = phoneNumber;
-
             studentRepository.Update(student);
         }
-        public void MakePayment(int studentId, decimal amount, DateTime paymentDate)
+        public void MakePayment(int studentId, decimal amount, DateTime? paymentDate = null)
         {
             var student = studentRepository.GetById(studentId);
             if (student == null)  throw new StudentNotFoundException("Student not found.");
-
             if (amount <= 0) throw new PaymentValidationException("Payment amount must be positive.");
-
             var payment = new Payment
             {
-                PaymentID = IDGenerator.GetNextPaymentID(),
                 StudentID = studentId,
                 Amount = amount,
-                PaymentDate = paymentDate
+                PaymentDate = paymentDate ?? DateTime.Now
             };
             paymentRepository.Add(payment);
         }
-
+        public void DisplayStudentInfo(int studentId)
+        {
+            var student = studentRepository.GetById(studentId);
+            if (student == null)  throw new StudentNotFoundException("Student not found.");
+            Console.WriteLine($"Student: {student.FirstName} {student.LastName}, Email: {student.Email}, Phone: {student.PhoneNumber}");
+        }
         public IEnumerable<Course> GetEnrolledCourses(int studentId)
         {
             var enrollments = enrollmentRepository.GetAll().Where(e => e.StudentID == studentId);
@@ -86,15 +85,6 @@ namespace StudentInformationSystem.dao.services
         public IEnumerable<Payment> GetPaymentHistory(int studentId)
         {
             return paymentRepository.GetAll().Where(p => p.StudentID == studentId);
-        }
-
-        public void AddStudent(Student student)
-        {
-            studentRepository.Add(student);
-        }
-        public Student GetStudentById(int StudentID)
-        {
-            return studentRepository.GetById(StudentID);
-        }
+        } 
     }
 }

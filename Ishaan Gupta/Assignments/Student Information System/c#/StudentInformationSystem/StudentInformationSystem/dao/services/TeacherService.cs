@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StudentInformationSystem.dao.interfaces;
 using StudentInformationSystem.entity;
+using StudentInformationSystem.exceptions;
 
 namespace StudentInformationSystem.dao.services
 {
@@ -18,36 +19,34 @@ namespace StudentInformationSystem.dao.services
             teacherRepository = teacherRepo;
             courseRepository = courseRepo;
         }
-        public Teacher GetTeacherById(int teacherId)
-        {
-            return teacherRepository.GetById(teacherId);
-        }
-
-        public void AddTeacher(Teacher teacher)
-        {
-            teacherRepository.Add(teacher);
-        }
-        public void UpdateTeacher(int teacherId, string firstName, string lastName, string email)
+       
+        public void UpdateTeacherInfo(int teacherId, string firstName, string lastName, string email)
         {
             var teacher = teacherRepository.GetById(teacherId);
-            if (teacher == null) Console.WriteLine("Teacher not found");
-                //throw new TeacherNotFoundException("Teacher not found.");
-
+            if (teacher == null)  throw new TeacherNotFoundException("Teacher not found.");
             teacher.FirstName = firstName;
             teacher.LastName = lastName;
             teacher.Email = email;
-
             teacherRepository.Update(teacher);
         }
-
-        public void DeleteTeacher(int teacherId)
+        public void DisplayTeacherInfo(int teacherId)
         {
-            teacherRepository.Delete(teacherId);
+            var teacher = teacherRepository.GetById(teacherId);
+            if (teacher == null)  throw new TeacherNotFoundException("Teacher not found.");
+            Console.WriteLine($"Teacher: {teacher.FirstName} {teacher.LastName}, Email: {teacher.Email}");
         }
-
         public IEnumerable<Course> GetAssignedCourses(int teacherId)
         {
-            return courseRepository.GetAll().Where(c => c.TeacherID == teacherId);
+            var teacher = teacherRepository.GetById(teacherId);
+            if (teacher == null) throw new TeacherNotFoundException("Teacher not found.");
+            var assignedCourses = new List<Course>();
+            var courses = courseRepository.GetAll();
+            foreach (var course in courses)
+            {
+                if (course.InstructorName == $"{teacher.FirstName} {teacher.LastName}") assignedCourses.Add(course);
+            }
+            return assignedCourses;
+
         }
     }
 }

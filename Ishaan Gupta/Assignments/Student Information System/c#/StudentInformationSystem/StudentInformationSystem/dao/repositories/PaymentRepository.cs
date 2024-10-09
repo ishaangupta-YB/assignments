@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,39 +12,118 @@ namespace StudentInformationSystem.dao.repositories
 {
     public class PaymentRepository:IPaymentRepository
     {
-        private readonly InMemDB db = InMemDB.Instance;
+        private readonly QueryBuilder queryBuilder;
+
+        public PaymentRepository()
+        {
+            queryBuilder = new QueryBuilder();
+        }
 
         public void Add(Payment payment)
         {
-            db.Payments.Add(payment);
+            using (var connection = DBConn.GetConnection())
+            {
+                var columnValues = new Dictionary<string, object>
+                {
+                    {"StudentID", payment.StudentID },
+                    {"Amount", payment.Amount },
+                    {"PaymentDate", payment.PaymentDate }
+                };
+
+                var query = queryBuilder.Insert("Payments", columnValues).Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    foreach (var column in columnValues)
+                    {
+                        command.Parameters.AddWithValue($"@{column.Key}", column.Value);
+                    }
+                    command.ExecuteNonQuery();  
+                }
+            }
         }
         public void Delete(int paymentId)
         {
-            var payment = GetById(paymentId);
-            if (payment != null)
+            using (var connection = DBConn.GetConnection())
             {
-                db.Payments.Remove(payment);
+                var query = queryBuilder.Delete("Payments").Where("PaymentID = @PaymentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PaymentID", paymentId);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
         public IEnumerable<Payment> GetAll()
         {
-            return db.Payments;
+            var payments = new List<Payment>();
+            using (var connection = DBConn.GetConnection())
+            {
+                var query = queryBuilder.Select("Payments").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var payment = new Payment
+                        {
+                            PaymentID = (int)reader["PaymentID"],
+                            StudentID = (int)reader["StudentID"],
+                            Amount = (decimal)reader["Amount"],
+                            PaymentDate = (DateTime)reader["PaymentDate"]
+                        };
+                        payments.Add(payment);
+                    }
+                }
+            }
+            return payments;
         }
 
         public Payment GetById(int paymentId)
         {
-            return db.Payments.FirstOrDefault(p => p.PaymentID == paymentId);
+            using (var connection = DBConn.GetConnection())
+            {
+                var query = queryBuilder.Select("Payments").Where("PaymentID = @PaymentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PaymentID", paymentId);
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return new Payment
+                        {
+                            PaymentID = (int)reader["PaymentID"],
+                            StudentID = (int)reader["StudentID"],
+                            Amount = (decimal)reader["Amount"],
+                            PaymentDate = (DateTime)reader["PaymentDate"]
+                        };
+                    }
+                }
+            }
+            return null;
         }
 
         public void Update(Payment payment)
         {
-            var existingPayment = GetById(payment.PaymentID);
-            if (existingPayment != null)
+            using (var connection = DBConn.GetConnection())
             {
-                existingPayment.StudentID = payment.StudentID;
-                existingPayment.Amount = payment.Amount;
-                existingPayment.PaymentDate = payment.PaymentDate;
+                var columnValues = new Dictionary<string, object>
+                {
+                    {"StudentID", payment.StudentID },
+                    {"Amount", payment.Amount },
+                    {"PaymentDate", payment.PaymentDate }
+                };
+
+                var query = queryBuilder.Update("Payments", columnValues).Where("PaymentID = @PaymentID").Build();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    foreach (var column in columnValues)
+                    {
+                        command.Parameters.AddWithValue($"@{column.Key}", column.Value);
+                    }
+                    command.Parameters.AddWithValue("@PaymentID", payment.PaymentID);
+                    command.ExecuteNonQuery();
+                }
             }
         }
     }

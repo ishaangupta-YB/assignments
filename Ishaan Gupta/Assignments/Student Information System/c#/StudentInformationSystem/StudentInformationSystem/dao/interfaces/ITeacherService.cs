@@ -9,10 +9,8 @@ namespace StudentInformationSystem.dao.interfaces
 {
     public interface ITeacherService
     {
-        Teacher GetTeacherById(int teacherId);
-        void AddTeacher(Teacher teacher);
-        void UpdateTeacher(int teacherId, string firstName, string lastName, string email);
-        void DeleteTeacher(int teacherId);
+        void DisplayTeacherInfo(int teacherId);
+        void UpdateTeacherInfo(int teacherId, string firstName, string lastName, string email);
         IEnumerable<Course> GetAssignedCourses(int teacherId);
     }
 }

@@ -9,8 +9,8 @@ namespace StudentInformationSystem.dao.interfaces
 {
     public interface IPaymentService
     {
-        IEnumerable<Payment> GetPaymentsByStudent(int studentId);
-        void AddPayment(Payment payment);
-        void DeletePayment(int paymentId);
+        Student GetStudent(int studentId);
+        decimal GetPaymentAmount(int paymentId);
+        DateTime GetPaymentDate(int paymentId);
     }
 }

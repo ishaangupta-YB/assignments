@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StudentInformationSystem.dao.interfaces;
 using StudentInformationSystem.entity;
+using StudentInformationSystem.exceptions;
 
 namespace StudentInformationSystem.dao.services
 {
@@ -18,22 +19,25 @@ namespace StudentInformationSystem.dao.services
             paymentRepository = paymentRepo;
             studentRepository = studentRepo;
         }
-        public IEnumerable<Payment> GetPaymentsByStudent(int studentId)
+        public Student GetStudent(int paymentId)
         {
-            return paymentRepository.GetAll().Where(p => p.StudentID == studentId);
+            var payment = paymentRepository.GetById(paymentId);
+            if (payment == null) throw new PaymentNotFoundException("Payment not found.");
+            return studentRepository.GetById(payment.StudentID);
         }
 
-        public void AddPayment(Payment payment)
+        public decimal GetPaymentAmount(int paymentId)
         {
-            var student = studentRepository.GetById(payment.StudentID);
-            if (student == null) Console.WriteLine("Student not found");
-                //throw new StudentNotFoundException("Student not found.");
-            paymentRepository.Add(payment);
+            var payment = paymentRepository.GetById(paymentId);
+            if (payment == null) throw new PaymentNotFoundException("Payment not found.");
+            return payment.Amount;
         }
 
-        public void DeletePayment(int paymentId)
+        public DateTime GetPaymentDate(int paymentId)
         {
-            paymentRepository.Delete(paymentId);
+            var payment = paymentRepository.GetById(paymentId);
+            if (payment == null) throw new PaymentNotFoundException("Payment not found.");
+            return payment.PaymentDate;
         }
     }
 }

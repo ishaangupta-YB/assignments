@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StudentInformationSystem.dao.interfaces;
 using StudentInformationSystem.entity;
+using StudentInformationSystem.exceptions;
 
 namespace StudentInformationSystem.dao.services
 {
@@ -20,25 +21,21 @@ namespace StudentInformationSystem.dao.services
             studentRepository = studentRepo;
             courseRepository = courseRepo;
         }
-        public IEnumerable<Enrollment> GetEnrollmentsByCourse(int courseId)
+        public Student GetStudent(int enrollmentId)
         {
-            return enrollmentRepository.GetAll().Where(e => e.CourseID == courseId);
+            var enrollment = enrollmentRepository.GetById(enrollmentId);
+            if (enrollment == null) throw new EnrollmentNotFoundException("Enrollment not found.");
+            var student = studentRepository.GetById(enrollment.StudentID);
+            if (student == null) throw new StudentNotFoundException("Student not found.");
+            return student;
         }
-
-        public IEnumerable<Enrollment> GetEnrollmentsByStudent(int studentId)
+        public Course GetCourse(int enrollmentId)
         {
-            return enrollmentRepository.GetAll().Where(e => e.StudentID == studentId);
+            var enrollment = enrollmentRepository.GetById(enrollmentId);
+            if (enrollment == null) throw new EnrollmentNotFoundException("Enrollment not found.");
+            var course = courseRepository.GetById(enrollment.CourseID);
+            if (course == null) throw new CourseNotFoundException("Course not found.");
+            return course;
         }
-
-        public void AddEnrollment(Enrollment enrollment)
-        {
-            enrollmentRepository.Add(enrollment);
-        }
-
-        public void DeleteEnrollment(int enrollmentId)
-        {
-            enrollmentRepository.Delete(enrollmentId);
-        }
-
     }
 }
