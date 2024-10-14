@@ -9,6 +9,7 @@ namespace StudentInformationSystem.util
 {
     public static class DatabaseInitializer
     {
+        // Method to initialize the DB by creating required tables if they don't exist
         public static void Initialize()
         {
             using (var connection = DBConn.GetConnection())
@@ -20,6 +21,7 @@ namespace StudentInformationSystem.util
                 }
                 try
                 {
+                    // SQL script to create tables if they do not already exist
                     string createTablesSql = @"
                         IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Students' AND xtype='U')
                         CREATE TABLE Students (

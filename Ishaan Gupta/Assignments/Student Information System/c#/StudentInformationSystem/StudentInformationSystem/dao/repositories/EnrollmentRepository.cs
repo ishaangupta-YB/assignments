@@ -10,6 +10,7 @@ using StudentInformationSystem.util;
 
 namespace StudentInformationSystem.dao.repositories
 {
+    // handles db operations related to the Enrollment table
     public class EnrollmentRepository:IEnrollmentRepository
     {
         private readonly QueryBuilder queryBuilder;
@@ -17,6 +18,8 @@ namespace StudentInformationSystem.dao.repositories
         {
             queryBuilder = new QueryBuilder();
         }
+
+        // Adds a new enrollment record to the db
         public void Add(Enrollment enrollment)
         {
             using (var connection = DBConn.GetConnection())
@@ -39,7 +42,7 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
-
+        // Deletes an enrollment record from the db based on the enrollment ID.
         public void Delete(int enrollmentId)
         {
             using (var connection = DBConn.GetConnection())
@@ -52,7 +55,7 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
-
+        // Retrieves all enrollment records from the db
         public IEnumerable<Enrollment> GetAll()
         {
             var enrollments = new List<Enrollment>();
@@ -78,6 +81,7 @@ namespace StudentInformationSystem.dao.repositories
             return enrollments;
         }
 
+        // Retrieves an enrollment record by its ID.
         public Enrollment GetById(int enrollmentId)
         {
             using (var connection = DBConn.GetConnection())
@@ -101,7 +105,7 @@ namespace StudentInformationSystem.dao.repositories
             }
             return null;
         }
-
+        // Updates an existing enrollment record in the db
         public void Update(Enrollment enrollment)
         {
             using (var connection = DBConn.GetConnection())

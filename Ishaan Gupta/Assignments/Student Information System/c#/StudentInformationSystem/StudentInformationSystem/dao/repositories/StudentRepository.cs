@@ -10,6 +10,7 @@ using StudentInformationSystem.util;
 
 namespace StudentInformationSystem.dao.repositories
 {
+    // handles db operations related to the Student table
     public class StudentRepository:IStudentRepository
     {
         private readonly QueryBuilder queryBuilder;
@@ -17,6 +18,8 @@ namespace StudentInformationSystem.dao.repositories
         {
             queryBuilder = new QueryBuilder();
         }
+
+        // Adds a new student record to the db
         public void Add(Student student)
         { 
             using (var connection = DBConn.GetConnection())
@@ -42,6 +45,7 @@ namespace StudentInformationSystem.dao.repositories
             }
         }
 
+        // Delete a student record from the db based on the student ID
         public void Delete(int studentId)
         {
             var student = GetById(studentId);
@@ -59,6 +63,7 @@ namespace StudentInformationSystem.dao.repositories
             }
         }
 
+        // Retrieves all student records from the db
         public IEnumerable<Student> GetAll()
         {
             var students = new List<Student>();
@@ -85,6 +90,8 @@ namespace StudentInformationSystem.dao.repositories
             }
             return students;
         }
+
+        // Retrieves a student record by its ID.
         public Student GetById(int studentId)
         {
             using (var connection = DBConn.GetConnection())
@@ -110,6 +117,8 @@ namespace StudentInformationSystem.dao.repositories
             }
             return null;
         }
+
+        // Updates an existing student record in the db
         public void Update(Student student)
         {
             using (var connection = DBConn.GetConnection())

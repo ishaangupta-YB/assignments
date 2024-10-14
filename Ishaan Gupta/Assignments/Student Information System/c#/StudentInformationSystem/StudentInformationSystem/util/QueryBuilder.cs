@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace StudentInformationSystem.util
 {
+    // defined functions to dynamically build SQL queries (reduces code repitition and is also easier for me to implement)
     public class QueryBuilder
     {
-        private StringBuilder query;
-        private List<string> conditions;
-        private List<string> columns;
-        private List<string> values;
+        private StringBuilder query;       // Stores the query being built
+        private List<string> conditions;   // List of where conditions.
+        private List<string> columns;      // List of columns for INSERT/UPDATE
+        private List<string> values;       // List of values for INSERT/UPDATE
 
         public QueryBuilder()
         {
@@ -20,6 +21,8 @@ namespace StudentInformationSystem.util
             columns = new List<string>();
             values = new List<string>();
         }
+
+        // method to build SELECT query (optional columns to retrieve)
         public QueryBuilder Select(string table, params string[] cols)
         {
             query.Clear();
@@ -35,6 +38,8 @@ namespace StudentInformationSystem.util
             query.Append(" FROM ").Append(table);
             return this;
         }
+
+        // method to INSERT query with specified columns and values
         public QueryBuilder Insert(string table, Dictionary<string, object> colVals)
         {
             query.Clear();
@@ -54,6 +59,7 @@ namespace StudentInformationSystem.util
             return this;
         }
 
+        // method to build UPDATE query with specified columns and values
         public QueryBuilder Update(string table, Dictionary<string, object> colVals)
         {
             query.Clear();
@@ -69,7 +75,7 @@ namespace StudentInformationSystem.util
 
             return this;
         }
-
+        // method to build a DELETE query for the specified table
         public QueryBuilder Delete(string table)
         {
             query.Clear();
@@ -77,11 +83,13 @@ namespace StudentInformationSystem.util
             return this;
         }
 
+        // method to append a WHERE clause condition
         public QueryBuilder Where(string condition)
         {
             conditions.Add(condition);
             return this;
         }
+        // Finalizes the query and returns the complete SQL string
         public string Build()
         {
             if (conditions.Count > 0)
@@ -90,6 +98,8 @@ namespace StudentInformationSystem.util
             }
             return query.ToString();
         }
+
+        // Resets the builder for reuse (iam not using for now)
         public void Reset()
         {
             query.Clear();

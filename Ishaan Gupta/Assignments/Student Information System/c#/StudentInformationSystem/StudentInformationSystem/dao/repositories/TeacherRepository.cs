@@ -10,13 +10,17 @@ using StudentInformationSystem.util;
 
 namespace StudentInformationSystem.dao.repositories
 {
+    // handles DB operations related to the Teacher table
     public class TeacherRepository:ITeacherRepository
     {
         private readonly QueryBuilder queryBuilder;
+        // Constructor initializes the query builder for creating SQL queries
         public TeacherRepository()
         {
             queryBuilder = new QueryBuilder();
         }
+
+        // method to add a new teacher record to the DB
         public void Add(Teacher teacher)
         {
             using (var connection = DBConn.GetConnection())
@@ -28,9 +32,11 @@ namespace StudentInformationSystem.dao.repositories
                     {"Email", teacher.Email }
                 };
 
+                // Building the SQL query for inserting the teacher data
                 var query = queryBuilder.Insert("Teachers", columnValues).Build();
                 using (var command = new SqlCommand(query, connection))
                 {
+                    // Binding the parameter values
                     foreach (var column in columnValues)
                     {
                         command.Parameters.AddWithValue($"@{column.Key}", column.Value);
@@ -39,6 +45,7 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
+        // method to delete teacher record from DB based on teacherId
         public void Delete(int teacherId)
         {
             using (var connection = DBConn.GetConnection())
@@ -51,6 +58,8 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
+
+        // Retrieves a teacher record by its ID
         public Teacher GetById(int teacherId)
         {
             using (var connection = DBConn.GetConnection())
@@ -60,6 +69,8 @@ namespace StudentInformationSystem.dao.repositories
                 {
                     command.Parameters.AddWithValue("@TeacherID", teacherId);
                     var reader = command.ExecuteReader();
+
+                    // Read and return the teacher data if found.
                     if (reader.Read())
                     {
                         return new Teacher
@@ -75,6 +86,7 @@ namespace StudentInformationSystem.dao.repositories
             return null;
         }
 
+        // Update an existing teacher record in the DB
         public void Update(Teacher teacher)
         {
             using (var connection = DBConn.GetConnection())
@@ -98,6 +110,8 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
+
+        // Retrieves all teacher records from the DB
         public IEnumerable<Teacher> GetAll()
         {
             var teachers = new List<Teacher>();

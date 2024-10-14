@@ -9,18 +9,22 @@ using StudentInformationSystem.exceptions;
 
 namespace StudentInformationSystem.dao.services
 {
+    // business logic for handling enrollment-related operations
     public class EnrollmentService:IEnrollmentService
     {
         private readonly IEnrollmentRepository enrollmentRepository;
         private readonly IStudentRepository studentRepository;
         private readonly ICourseRepository courseRepository;
-
+        
+        // Constructor to init the repositories
         public EnrollmentService(IEnrollmentRepository enrollmentRepo, IStudentRepository studentRepo, ICourseRepository courseRepo)
         {
             enrollmentRepository = enrollmentRepo;
             studentRepository = studentRepo;
             courseRepository = courseRepo;
         }
+
+        // Retrieve the student with a specific enrollment
         public Student GetStudent(int enrollmentId)
         {
             var enrollment = enrollmentRepository.GetById(enrollmentId);
@@ -29,6 +33,8 @@ namespace StudentInformationSystem.dao.services
             if (student == null) throw new StudentNotFoundException("Student not found.");
             return student;
         }
+
+        // Retrieve the course with a specific enrollment
         public Course GetCourse(int enrollmentId)
         {
             var enrollment = enrollmentRepository.GetById(enrollmentId);

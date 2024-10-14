@@ -10,6 +10,7 @@ using StudentInformationSystem.util;
 
 namespace StudentInformationSystem.dao.repositories
 {
+    // handles db operations related to the Course table
     public class CourseRepository:ICourseRepository
     {
         private readonly QueryBuilder queryBuilder;
@@ -17,6 +18,8 @@ namespace StudentInformationSystem.dao.repositories
         {
             queryBuilder = new QueryBuilder();
         }
+
+        // Adds a new course record to the db
         public void Add(Course course)
         {
             using (var connection = DBConn.GetConnection())
@@ -39,6 +42,7 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
+        // Deletes a course record from the db based on the course ID.
         public void Delete(int courseId)
         {
             using (var connection = DBConn.GetConnection())
@@ -51,7 +55,7 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
-
+        // Retrieves all course records from the db
         public IEnumerable<Course> GetAll()
         {
             var courses = new List<Course>();
@@ -77,6 +81,7 @@ namespace StudentInformationSystem.dao.repositories
             return courses;
         }
 
+        // Retrieves a course record by its ID
         public Course GetById(int courseId)
         {
             using (var connection = DBConn.GetConnection())
@@ -100,7 +105,7 @@ namespace StudentInformationSystem.dao.repositories
             }
             return null;
         }
-
+        // Updates an existing course record in the db
         public void Update(Course course)
         {
             using (var connection = DBConn.GetConnection())

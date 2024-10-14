@@ -10,6 +10,7 @@ using StudentInformationSystem.util;
 
 namespace StudentInformationSystem.dao.repositories
 {
+    // handles db operations related to the Payment table.
     public class PaymentRepository:IPaymentRepository
     {
         private readonly QueryBuilder queryBuilder;
@@ -19,6 +20,7 @@ namespace StudentInformationSystem.dao.repositories
             queryBuilder = new QueryBuilder();
         }
 
+        // Adds a new payment record to the db
         public void Add(Payment payment)
         {
             using (var connection = DBConn.GetConnection())
@@ -41,6 +43,8 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
+
+        // Delete a payment record from the db based on the payment ID.
         public void Delete(int paymentId)
         {
             using (var connection = DBConn.GetConnection())
@@ -53,7 +57,7 @@ namespace StudentInformationSystem.dao.repositories
                 }
             }
         }
-
+        // Retrieves all payment records from the db
         public IEnumerable<Payment> GetAll()
         {
             var payments = new List<Payment>();
@@ -79,6 +83,7 @@ namespace StudentInformationSystem.dao.repositories
             return payments;
         }
 
+        // Retrieves a payment record by its ID.
         public Payment GetById(int paymentId)
         {
             using (var connection = DBConn.GetConnection())
@@ -103,6 +108,7 @@ namespace StudentInformationSystem.dao.repositories
             return null;
         }
 
+        // Updates an existing payment record in the db
         public void Update(Payment payment)
         {
             using (var connection = DBConn.GetConnection())

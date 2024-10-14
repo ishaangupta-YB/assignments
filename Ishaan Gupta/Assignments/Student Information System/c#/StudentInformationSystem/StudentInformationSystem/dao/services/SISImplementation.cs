@@ -10,18 +10,21 @@ namespace StudentInformationSystem.dao.services
 {
     public class SISImplementation : ISISImplementation
     {
+        // Repositories for interacting with different tables in the DB
         private readonly IStudentRepository studentRepository;
         private readonly ICourseRepository courseRepository;
         private readonly ITeacherRepository teacherRepository;
         private readonly IEnrollmentRepository enrollmentRepository;
         private readonly IPaymentRepository paymentRepository;
 
+        // Services that contains business logic
         private readonly IStudentService studentService;
         private readonly ICourseService courseService;
         private readonly ITeacherService teacherService;
         private readonly IEnrollmentService enrollmentService;
         private readonly IPaymentService paymentService; 
         public SISImplementation() {
+            // Initializing repositories and services
             studentRepository = new StudentRepository();
             courseRepository = new CourseRepository();
             teacherRepository = new TeacherRepository();
@@ -35,6 +38,8 @@ namespace StudentInformationSystem.dao.services
             paymentService = new PaymentService(paymentRepository, studentRepository);
             //DisplayAllTablesData();
         }
+
+        // method to enroll a student in a course
         public void EnrollStudentInCourse()
         {
             try
@@ -54,6 +59,8 @@ namespace StudentInformationSystem.dao.services
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
+
+        // method to assign a teacher to a course
         public void AssignTeacherToCourse()
         {
             try
@@ -72,6 +79,8 @@ namespace StudentInformationSystem.dao.services
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
+
+        // method to make a payment for a student
         public void MakePayment()
         {
             try
@@ -104,6 +113,8 @@ namespace StudentInformationSystem.dao.services
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
+
+        // Method to generate report of students enrolled in a specific courses
         public void GenerateEnrollmentReport()
         {
             try
@@ -124,14 +135,20 @@ namespace StudentInformationSystem.dao.services
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
+
+        // Method to generate payment report for a student
         public void GeneratePaymentReport()
         {
             try
             {
                 Console.Write("Enter Student ID: ");
                 int studentId = int.Parse(Console.ReadLine());
-
+                // Retrieve payment history for the specified student
                 var payments = studentService.GetPaymentHistory(studentId);
+                if (payments == null || payments.Count() == 0) {
+                    Console.WriteLine($"No payments found");
+                    return;
+                }
                 Console.WriteLine($"Payment Report for Student ID {studentId}:");
                 foreach (var payment in payments)
                 {
@@ -143,6 +160,8 @@ namespace StudentInformationSystem.dao.services
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
+
+        // Method to calculate and display course statistics
         public void CalculateCourseStatistics()
         {
             try
@@ -156,6 +175,7 @@ namespace StudentInformationSystem.dao.services
 
                 foreach (var enrollment in enrollments)
                 {
+                    // Sum of the payments made by each enrolled student
                     var payments = paymentRepository.GetAll().Where(p => p.StudentID == enrollment.StudentID).ToList();
                     totalPayments += payments.Sum(p => p.Amount);
                 }
@@ -170,28 +190,30 @@ namespace StudentInformationSystem.dao.services
             }
         }
 
-        public void DisplayAllTablesData()
-        {
-            Console.WriteLine("Students:");
-            var students = studentRepository.GetAll();
-            foreach (var student in students) Console.WriteLine($"{student.StudentID} - {student.FirstName} {student.LastName}");
+        // for my use only, debugging purpose 
 
-            Console.WriteLine("\nCourses:");
-            var courses = courseRepository.GetAll();
-            foreach (var course in courses) Console.WriteLine($"{course.CourseID} - {course.CourseName} ({course.CourseCode}) \t {course.InstructorName}");
+        //public void DisplayAllTablesData()
+        //{
+        //    Console.WriteLine("Students:");
+        //    var students = studentRepository.GetAll();
+        //    foreach (var student in students) Console.WriteLine($"{student.StudentID} - {student.FirstName} {student.LastName}");
 
-            Console.WriteLine("\nTeachers:");
-            var teachers = teacherRepository.GetAll();
-            foreach (var teacher in teachers)  Console.WriteLine($"{teacher.TeacherID} - {teacher.FirstName} {teacher.LastName}");
+        //    Console.WriteLine("\nCourses:");
+        //    var courses = courseRepository.GetAll();
+        //    foreach (var course in courses) Console.WriteLine($"{course.CourseID} - {course.CourseName} ({course.CourseCode}) \t {course.InstructorName}");
 
-            Console.WriteLine("\nEnrollments:");
-            var enrollments = enrollmentRepository.GetAll();
-            foreach (var enrollment in enrollments)  Console.WriteLine($"Enrollment ID: {enrollment.EnrollmentID}, StudentID: {enrollment.StudentID}, CourseID: {enrollment.CourseID}");
+        //    Console.WriteLine("\nTeachers:");
+        //    var teachers = teacherRepository.GetAll();
+        //    foreach (var teacher in teachers)  Console.WriteLine($"{teacher.TeacherID} - {teacher.FirstName} {teacher.LastName}");
+
+        //    Console.WriteLine("\nEnrollments:");
+        //    var enrollments = enrollmentRepository.GetAll();
+        //    foreach (var enrollment in enrollments)  Console.WriteLine($"Enrollment ID: {enrollment.EnrollmentID}, StudentID: {enrollment.StudentID}, CourseID: {enrollment.CourseID}");
             
-            Console.WriteLine("\nPayments:");
-            var payments = paymentRepository.GetAll();
-            foreach (var payment in payments)  Console.WriteLine($"Payment ID: {payment.PaymentID}, StudentID: {payment.StudentID}, Amount: {payment.Amount}, Date: {payment.PaymentDate}");
-        }
+        //    Console.WriteLine("\nPayments:");
+        //    var payments = paymentRepository.GetAll();
+        //    foreach (var payment in payments)  Console.WriteLine($"Payment ID: {payment.PaymentID}, StudentID: {payment.StudentID}, Amount: {payment.Amount}, Date: {payment.PaymentDate}");
+        //}
 
         // I have used this for app testing using mock data whenever DB is not in use
         //static void InitData(IStudentService studentService, ITeacherService teacherService, ICourseService courseService)
