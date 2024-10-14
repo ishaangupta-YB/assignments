@@ -393,29 +393,7 @@ namespace CarConnect.dao.services
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
-
-        private void ViewMyReservations()
-        {
-            try
-            {
-                var reservations = reservationService.GetReservationsByCustomerId(loggedInCustomer.CustomerID);
-                if (reservations.Count() == 0)
-                {
-                    Console.WriteLine("You have no reservations.");
-                    return;
-                }
-
-                Console.WriteLine("\nMy Reservations:");
-                foreach (var reservation in reservations)
-                {
-                    var vehicle = vehicleService.GetVehicleById(reservation.VehicleID);
-                    Console.WriteLine($"Reservation ID: {reservation.ReservationID}, Vehicle: {vehicle.Make} {vehicle.Model}, Start Date: {reservation.StartDate.ToShortDateString()}, End Date: {reservation.EndDate.ToShortDateString()}, Total Cost: {reservation.TotalCost:C}, Status: {reservation.Status}");
-                }
-            }
-            catch (Exception ex) {
-                Console.WriteLine("Error: " + ex.Message);
-            }    
-        }
+         
          
             //public void DisplayAllTablesData()
             //{

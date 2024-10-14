@@ -18,7 +18,7 @@ namespace CarConnect.dao.repositories
         {
             queryBuilder = new QueryBuilder();
         }
-
+        // Add vehicle function
         public void Add(Vehicle vehicle)
         {
             using (var connection = DBConn.GetConnection())
@@ -45,26 +45,39 @@ namespace CarConnect.dao.repositories
                 }
             }
         }
-
+        // Delete vehicle based on vehicleId
         public void Delete(int vehicleId)
         {
             using (var connection = DBConn.GetConnection())
             {
-                var query = queryBuilder.Delete("Vehicles").Where("VehicleID = @VehicleID").Build();
+                // Check if the vehicle is associated with any reservations
+                var query = "SELECT COUNT(*) FROM Reservations WHERE VehicleID = @VehicleID";
                 using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@VehicleID", vehicleId);
+                    int reservationCount = (int)command.ExecuteScalar();
+
+                    if (reservationCount > 0)
+                    {
+                        throw new InvalidOperationException("Cannot delete vehicle. It is associated with existing reservations.");
+                    }
+                }
+                var queryDel = queryBuilder.Delete("Vehicles").Where("VehicleID = @VehicleID").Build();
+                using (var command = new SqlCommand(queryDel, connection))
                 {
                     command.Parameters.AddWithValue("@VehicleID", vehicleId);
                     command.ExecuteNonQuery();
                 }
             }
         }
-
+        // get all vehicles functions
         public IEnumerable<Vehicle> GetAll()
         {
             var vehicles = new List<Vehicle>();
             using (var connection = DBConn.GetConnection())
             {
                 var query = queryBuilder.Select("Vehicles").Build();
+                Console.WriteLine(query);
                 using (var command = new SqlCommand(query, connection))
                 {
                     var reader = command.ExecuteReader();
@@ -87,7 +100,7 @@ namespace CarConnect.dao.repositories
             }
             return vehicles;
         }
-
+        // get vehicle based on ID function
         public Vehicle GetById(int vehicleId)
         {
             using (var connection = DBConn.GetConnection())
@@ -115,7 +128,7 @@ namespace CarConnect.dao.repositories
             }
             return null;
         }
-
+        // Update vehicle function
         public void Update(Vehicle vehicle)
         {
             using (var connection = DBConn.GetConnection())

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CarConnect.util
 {
@@ -12,6 +9,7 @@ namespace CarConnect.util
         private List<string> conditions;
         private List<string> columns;
         private List<string> values;
+
         public QueryBuilder()
         {
             query = new StringBuilder();
@@ -19,9 +17,11 @@ namespace CarConnect.util
             columns = new List<string>();
             values = new List<string>();
         }
+
         public QueryBuilder Select(string table, params string[] cols)
         {
             query.Clear();
+            conditions.Clear();
             query.Append("SELECT ");
             if (cols.Length > 0)
             {
@@ -57,6 +57,7 @@ namespace CarConnect.util
         public QueryBuilder Update(string table, Dictionary<string, object> colVals)
         {
             query.Clear();
+            conditions.Clear();
             columns.Clear();
 
             foreach (var column in colVals)
@@ -73,6 +74,7 @@ namespace CarConnect.util
         public QueryBuilder Delete(string table)
         {
             query.Clear();
+            conditions.Clear();
             query.Append("DELETE FROM ").Append(table);
             return this;
         }
