@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CarConnect.dao.interfaces;
-using CarConnect.dao.services;
-using CarConnect.entity;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
+using CarConnect.BusinessLayer.services;
+using CarConnect.BusinessLayer.repositories;
+using CarConnect.BusinessLayer.interfaces;
+using CarConnect.Entity;
 
 namespace CarConnect.Tests
 {
@@ -104,6 +104,7 @@ namespace CarConnect.Tests
             var availableVehicles = vehicleService.GetAvailableVehicles();
 
             Assert.That(availableVehicles.All(v => v.Availability), Is.True, "All returned vehicles should be available.");
-        } 
+        }
+         
     }
 }

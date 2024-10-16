@@ -6,7 +6,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7AC68D98-782F-42B4-8B7C-D9AF3DA992AE}</ProjectGuid>
+    <ProjectGuid>{DEDD12FF-B242-4F72-BD81-75BA93F1E335}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CarConnect.Tests</RootNamespace>
@@ -60,8 +60,8 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -83,16 +83,20 @@
     <Compile Include="VehicleServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\NUnit.Analyzers.4.3.0\analyzers\dotnet\cs\nunit.analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CarConnect\CarConnect.csproj">
-      <Project>{5178e7a2-7235-48a3-be33-f265cba15606}</Project>
-      <Name>CarConnect</Name>
+    <ProjectReference Include="..\CarConnect.BusinessLayer\CarConnect.BusinessLayer.csproj">
+      <Project>{ec5319d2-aaba-47b6-a392-1569f6421947}</Project>
+      <Name>CarConnect.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CarConnect.Entity\CarConnect.Entity.csproj">
+      <Project>{65b2db04-4cf0-48b5-a76e-d2df7136b6b8}</Project>
+      <Name>CarConnect.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CarConnect.Exceptions\CarConnect.Exceptions.csproj">
+      <Project>{aba9e744-cd4e-4b3c-8ac5-7fadbc7fedf1}</Project>
+      <Name>CarConnect.Exceptions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

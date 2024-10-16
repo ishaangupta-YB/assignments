@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CarConnect.dao.interfaces;
-using CarConnect.dao.services;
-using CarConnect.entity;
-using CarConnect.exceptions;
+using CarConnect.BusinessLayer.interfaces;
+using CarConnect.BusinessLayer.services;
+using CarConnect.Entity;
+using CarConnect.Exceptions;
 using Moq;
 using NUnit.Framework;
 
