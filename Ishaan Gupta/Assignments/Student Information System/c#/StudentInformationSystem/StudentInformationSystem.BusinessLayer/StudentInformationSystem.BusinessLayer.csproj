@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B53A59C-2F8B-4D34-87B4-4763C38C6DD1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StudentInformationSystem.BusinessLayer</RootNamespace>
+    <AssemblyName>StudentInformationSystem.BusinessLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="interfaces\ICourseRepository.cs" />
+    <Compile Include="interfaces\ICourseService.cs" />
+    <Compile Include="interfaces\IEnrollmentRepository.cs" />
+    <Compile Include="interfaces\IEnrollmentService.cs" />
+    <Compile Include="interfaces\IPaymentRepository.cs" />
+    <Compile Include="interfaces\IPaymentService.cs" />
+    <Compile Include="interfaces\ISISImplementation.cs" />
+    <Compile Include="interfaces\IStudentRepository.cs" />
+    <Compile Include="interfaces\IStudentService.cs" />
+    <Compile Include="interfaces\ITeacherRepository.cs" />
+    <Compile Include="interfaces\ITeacherService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="repositories\EnrollmentRepository.cs" />
+    <Compile Include="repositories\CourseRepository.cs" />
+    <Compile Include="repositories\PaymentRepository.cs" />
+    <Compile Include="repositories\StudentRepository.cs" />
+    <Compile Include="repositories\TeacherRepository.cs" />
+    <Compile Include="services\CourseService.cs" />
+    <Compile Include="services\EnrollmentService.cs" />
+    <Compile Include="services\PaymentService.cs" />
+    <Compile Include="services\SISImplementation.cs" />
+    <Compile Include="services\StudentService.cs" />
+    <Compile Include="services\TeacherService.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\StudentInformationSystem.Entity\StudentInformationSystem.Entity.csproj">
+      <Project>{a81ba670-c5c4-4614-aa42-a3139787ea2e}</Project>
+      <Name>StudentInformationSystem.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StudentInformationSystem.Exceptions\StudentInformationSystem.Exceptions.csproj">
+      <Project>{9b07defe-40c6-4fb7-9b66-ed8487cb983a}</Project>
+      <Name>StudentInformationSystem.Exceptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StudentInformationSystem.Util\StudentInformationSystem.Util.csproj">
+      <Project>{ff2a93c0-d60d-4977-aef2-966aa6ce4a4f}</Project>
+      <Name>StudentInformationSystem.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
