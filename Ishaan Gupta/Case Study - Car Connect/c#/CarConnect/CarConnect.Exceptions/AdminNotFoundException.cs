@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace CarConnect.Exceptions
 {
-    public class AdminNotFoundException : ApplicationException
+    public class AdminNotFoundException : Exception
     {
-        public AdminNotFoundException(string message) : base(message)
-        {
-            Console.WriteLine(message);
+        public AdminNotFoundException() : base() { }
 
-        }
+        public AdminNotFoundException(string message) : base(message) { }
+
+        public AdminNotFoundException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

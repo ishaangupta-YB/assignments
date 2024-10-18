@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace CarConnect.Exceptions
 {
-    public class CustomerNotFoundException : ApplicationException
+    public class CustomerNotFoundException : Exception
     {
-        public CustomerNotFoundException(string message) : base(message)
-        {
-            Console.WriteLine(message);
-        }
+        public CustomerNotFoundException() : base() { }
+
+        public CustomerNotFoundException(string message) : base(message) { }
+
+        public CustomerNotFoundException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

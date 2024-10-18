@@ -1,0 +1,8 @@
+2024-10-18 21:04:10.3607 | ERROR | Database connection string is not configured correctly. CarConnect.Exceptions.DatabaseConnectionException: Connection string 'CarConnectDB' is not configured correctly.
+   at CarConnect.Util.DBConn..cctor() in C:\Users\Ishita\Desktop\CarConnect\CarConnect.Util\DBConn.cs:line 26
+2024-10-18 21:04:10.4008 | ERROR | An unexpected error occurred in MainMod.Main System.TypeInitializationException: The type initializer for 'CarConnect.Util.DBConn' threw an exception. ---> CarConnect.Exceptions.DatabaseConnectionException: Connection string 'CarConnectDB' is not configured correctly.
+   at CarConnect.Util.DBConn..cctor() in C:\Users\Ishita\Desktop\CarConnect\CarConnect.Util\DBConn.cs:line 32
+   --- End of inner exception stack trace ---
+   at CarConnect.Util.DBConn.GetConnection()
+   at CarConnect.Util.DatabaseInitializer.Initialize() in C:\Users\Ishita\Desktop\CarConnect\CarConnect.Util\DatabaseInitializer.cs:line 17
+   at CarConnect.MainModule.MainMod.Main(String[] args) in C:\Users\Ishita\Desktop\CarConnect\CarConnect.MainModule\MainMod.cs:line 20

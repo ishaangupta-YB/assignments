@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using CarConnect.Exceptions;
 using System.Threading.Tasks;
+using NLog;
 
 namespace CarConnect.Util
 {
@@ -78,9 +79,13 @@ namespace CarConnect.Util
 
                     //Console.WriteLine("Database initialized successfully.");
                 }
+                //catch (DatabaseConnectionException ex)
+                //{
+                //    Console.WriteLine("Error: " + ex.Message);
+                //}
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error during database initialization: {ex.Message}");
+                    LoggerService.LogError("Error during database initialization.", ex);
                 }
                 finally
                 {

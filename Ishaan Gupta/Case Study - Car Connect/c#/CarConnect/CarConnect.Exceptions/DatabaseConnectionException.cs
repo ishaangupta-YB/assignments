@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace CarConnect.Exceptions
 {
-    public class DatabaseConnectionException : ApplicationException
+    public class DatabaseConnectionException : Exception
     {
-        public DatabaseConnectionException(string message) : base(message)
-        {
-            Console.WriteLine(message);
-        }
+        public DatabaseConnectionException() : base() { }
+
+        public DatabaseConnectionException(string message) : base(message) { }
+
+        public DatabaseConnectionException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

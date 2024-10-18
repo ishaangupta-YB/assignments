@@ -15,7 +15,15 @@ namespace CarConnect.MainModule
         static void Main(string[] args)
         {
             // Initialize the db by creating necessary tables
-            DatabaseInitializer.Initialize();
+            try
+            {
+                DatabaseInitializer.Initialize();
+            } 
+            catch (Exception ex) {
+                LoggerService.LogError("An unexpected error occurred in MainMod.Main", ex);
+                Console.WriteLine("An error occurred. Please contact support.");
+                return;
+            }
 
             // creating instance of CarConnectImplementation to handle multiple operations
             ICarConnectImplementation cc = new CarConnectImplementation();

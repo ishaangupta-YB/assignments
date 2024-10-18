@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CarConnect.BusinessLayer.interfaces;
 using CarConnect.Exceptions;
 using CarConnect.Entity;
+using CarConnect.Util;
 
 namespace CarConnect.BusinessLayer.services
 {
@@ -28,11 +29,10 @@ namespace CarConnect.BusinessLayer.services
                     throw new AuthenticationException("Invalid username or password.");
                 return customer;
             }
-            catch (AuthenticationException ex)
+            catch (CustomerNotFoundException)
             {
-                Console.WriteLine("Error: " + ex.Message);
-            }
-            return null;
+                throw new AuthenticationException("Invalid username or password.");
+            } 
         }
 
         public Admin AuthenticateAdmin(string username, string password)
@@ -44,11 +44,10 @@ namespace CarConnect.BusinessLayer.services
                     throw new AuthenticationException("Invalid username or password.");
                 return admin;
             }
-            catch (AuthenticationException ex)
+            catch (AdminNotFoundException)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                throw new AuthenticationException("Invalid username or password.");
             }
-            return null;
         }
     }
 }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace CarConnect.Exceptions
 {
-    public class ReservationException : ApplicationException
+    public class ReservationException : Exception
     {
-        public ReservationException(string message) : base(message)
-        {
-            Console.WriteLine(message);
-        }
+        public ReservationException() : base() { }
+
+        public ReservationException(string message) : base(message) { }
+
+        public ReservationException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

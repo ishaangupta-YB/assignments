@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using CarConnect.Exceptions;
+using NLog;
 
 namespace CarConnect.Util
 {
@@ -16,11 +17,24 @@ namespace CarConnect.Util
         // constructor to initialize the connection string
         static DBConn()
         {
-            connectionString = ConfigurationManager.ConnectionStrings["CarConnectDB"]?.ConnectionString;
-            //Console.WriteLine(connectionString);
-            if (string.IsNullOrWhiteSpace(connectionString))
+            try
             {
-                throw new DatabaseConnectionException("Connection string 'CarConnectDB' is not configured correctly.");
+                connectionString = ConfigurationManager.ConnectionStrings["CarConnectDB"]?.ConnectionString;
+                //Console.WriteLine(connectionString);
+                if (string.IsNullOrWhiteSpace(connectionString))
+                {
+                    throw new DatabaseConnectionException("Connection string 'CarConnectDB' is not configured correctly.");
+                }
+            }
+            catch (DatabaseConnectionException ex)
+            {
+                LoggerService.LogError("Database connection string is not configured correctly.", ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("Unexpected error initializing database connection.", ex);
+                throw new DatabaseConnectionException("An error occurred while initializing the database connection.");
             }
         }
 
@@ -39,10 +53,15 @@ namespace CarConnect.Util
 
                 return con;
             }
-            catch (Exception e)
+            catch (DatabaseConnectionException ex)
             {
-                Console.WriteLine(e);
-                return null;
+                LoggerService.LogError("Failed to establish a database connection.", ex);
+                throw; // Re-throw to be handled by calling code
+            }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("An unexpected error occurred while connecting to the database.", ex);
+                throw new DatabaseConnectionException("An error occurred while connecting to the database.");
             }
         }
     }

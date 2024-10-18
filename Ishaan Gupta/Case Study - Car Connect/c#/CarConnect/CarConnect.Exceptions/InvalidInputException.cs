@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace CarConnect.Exceptions
 {
-    public class InvalidInputException : ApplicationException
+    public class InvalidInputException : Exception
     {
-        public InvalidInputException(string message) : base(message)
-        {
-            Console.WriteLine(message);
-        }
+        public InvalidInputException() : base() { }
+
+        public InvalidInputException(string message) : base(message) { }
+
+        public InvalidInputException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

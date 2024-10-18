@@ -9,6 +9,7 @@ using CarConnect.Entity;
 using CarConnect.Exceptions;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace CarConnect.Tests
 {
@@ -57,7 +58,7 @@ namespace CarConnect.Tests
 
             var customer = authenticationService.AuthenticateCustomer(username, password);
 
-            Assert.That(customer, Is.Not.Null);
+            Assert.That(customer, Is.Not.Null); 
             Assert.That(customer.CustomerID, Is.EqualTo(1));
             Assert.That(customer.Username, Is.EqualTo("ishaang"));
         }

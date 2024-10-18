@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace CarConnect.Exceptions
 {
-    public class VehicleNotFoundException : ApplicationException
+    public class VehicleNotFoundException : Exception
     {
-        public VehicleNotFoundException(string message) : base(message)
-        {
-            Console.WriteLine(message);
-        }
+        public VehicleNotFoundException() : base() { }
+
+        public VehicleNotFoundException(string message) : base(message) { }
+
+        public VehicleNotFoundException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

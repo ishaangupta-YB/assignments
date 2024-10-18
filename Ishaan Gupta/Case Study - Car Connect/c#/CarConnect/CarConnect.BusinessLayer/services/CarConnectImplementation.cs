@@ -7,6 +7,7 @@ using CarConnect.BusinessLayer.interfaces;
 using CarConnect.BusinessLayer.repositories;
 using CarConnect.Entity; 
 using CarConnect.Exceptions;
+using CarConnect.Util;
 
 namespace CarConnect.BusinessLayer.services
 {
@@ -61,6 +62,11 @@ namespace CarConnect.BusinessLayer.services
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("Error during customer login.", ex);  // Log system-level exception
+                Console.WriteLine("An error occurred. Please try again later.");  // User-friendly message for unknown system exceptions
+            }
         }
 
         // Handle admin login process
@@ -84,6 +90,11 @@ namespace CarConnect.BusinessLayer.services
             catch (AuthenticationException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("Error during customer registration.", ex);  // Log system-level exception
+                Console.WriteLine("An error occurred. Please try again later.");  // User-friendly message for unknown system exceptions
             }
         }
 
@@ -122,11 +133,17 @@ namespace CarConnect.BusinessLayer.services
                 customerService.RegisterCustomer(customer);
                 Console.WriteLine("Customer registered successfully.");
             }
-            catch (Exception ex)
+            catch (InvalidInputException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("Error during customer registration.", ex);  // Log system-level exception
+                Console.WriteLine("An error occurred. Please try again later.");  // User-friendly message for unknown system exceptions
+            }
         }
+         
 
         // Displays customer-specific options after login
         public void CustomerMenu()
@@ -217,11 +234,19 @@ namespace CarConnect.BusinessLayer.services
         // Display a list of available vehicles
         public void DisplayAvailableVehicles()
         {
-            var vehicles = vehicleService.GetAvailableVehicles();
-            Console.WriteLine("\nAvailable Vehicles:");
-            foreach (var vehicle in vehicles)
+            try
             {
-                Console.WriteLine($"{vehicle.VehicleID} - {vehicle.Model} ({vehicle.Make}), {vehicle.Year}, Daily Rate: {vehicle.DailyRate}");
+                var vehicles = vehicleService.GetAvailableVehicles();
+                Console.WriteLine("\nAvailable Vehicles:");
+                foreach (var vehicle in vehicles)
+                {
+                    Console.WriteLine($"{vehicle.VehicleID} - {vehicle.Model} ({vehicle.Make}), {vehicle.Year}, Daily Rate: {vehicle.DailyRate}");
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("Error displaying available vehicles.", ex);
+                Console.WriteLine("An error occurred. Please try again later.");
             }
         }
 
@@ -256,6 +281,10 @@ namespace CarConnect.BusinessLayer.services
 
                 vehicleService.AddVehicle(vehicle);
                 Console.WriteLine("Vehicle added successfully.");
+            }
+            catch (InvalidInputException ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
             }
             catch (Exception ex)
             {
@@ -309,9 +338,18 @@ namespace CarConnect.BusinessLayer.services
                 vehicleService.UpdateVehicle(vehicle);
                 Console.WriteLine("Vehicle updated successfully.");
             }
-            catch (Exception ex)
+            catch (VehicleNotFoundException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+            }
+            catch (InvalidInputException ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("Error updating vehicle.", ex);
+                Console.WriteLine("An error occurred. Please try again later.");
             }
         }
 
@@ -326,9 +364,14 @@ namespace CarConnect.BusinessLayer.services
                 vehicleService.RemoveVehicle(vehicleId);
                 Console.WriteLine("Vehicle removed successfully.");
             }
-            catch (Exception ex)
+            catch (VehicleNotFoundException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("Error removing vehicle.", ex);
+                Console.WriteLine("An error occurred. Please try again later.");
             }
         }
 
@@ -364,7 +407,8 @@ namespace CarConnect.BusinessLayer.services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                LoggerService.LogError("Error generating reports.", ex);
+                Console.WriteLine("An error occurred. Please try again later.");
             }
         }
 
@@ -421,12 +465,16 @@ namespace CarConnect.BusinessLayer.services
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
-            catch (Exception ex)
+            catch (InvalidInputException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            catch (Exception ex)
+            {
+                LoggerService.LogError("An error occurred while making a reservation.", ex);
+                Console.WriteLine("An error occurred. Please try again later.");
+            }
         }
-
 
         //public void DisplayAllTablesData()
         //{
